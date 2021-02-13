@@ -60,7 +60,16 @@ class ItemVendaViewSet(viewsets.ModelViewSet):
 # 1. Dado um intervalo de tempo, quanto de comissão um vendedor tem direito?
 @api_view(('GET',))
 def pesquisa_comissao_vendedor(request, pk=None):
-
+    """
+        Pesquisa em um intervalo de datas, o valor de comissao pago ao vendedor.
+        Url: 127.0.0.1:8000/adm/pesquisa_comissao_vendedor
+        Exemplo de json de requisicao:
+        {
+            "data_inicio": "10/02/2021",
+            "data_fim": "14/02/2021",
+            "vendedor": "2798635640" # pesquisado pelo telefone vendedor.
+        }
+    """
     try:
         # formato nosso utf-8
         body_decode = request.body.decode('utf-8')
@@ -93,6 +102,15 @@ def pesquisa_comissao_vendedor(request, pk=None):
 # 2. Quais produtos e serviços um determinado cliente comprou num intervalo de tempo?
 @api_view(('GET',))
 def pesquisa_compras_cliente(request, pk=None):
+    """
+        Mostra produtos serviços que um cliente comprou num intervalo de tempo.
+        Url: 127.0.0.1:8000/adm/pesquisa_compras_cliente
+        {
+            "data_inicio": "10/02/2021",
+            "data_fim": "14/02/2021",
+            "cliente": "33280968" # usado telefone para pesquisar cliente.
+        }
+    """
     try:
         # formato nosso utf-8
         body_decode = request.body.decode('utf-8')
