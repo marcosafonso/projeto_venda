@@ -80,12 +80,16 @@ class ItemVenda(models.Model):
     def calcula_total_item(self):
         self.total = (self.produto_servico.preco_unitario * self.quantidade)
 
-    def calcula_total_comissao_item(self):
-        percentual = self.produto_servico.comissao
+    def calcula_total_comissao_item(self, comissao_reaplicada=None):
+        if comissao_reaplicada is None:
+            percentual = self.produto_servico.comissao
+        else:
+            percentual = comissao_reaplicada
+
         calculo_comissao = self.total * (percentual/100)
         self.total_comissao = calculo_comissao
 
     def save(self, *args, **kwargs):
         self.calcula_total_item()
-        self.calcula_total_comissao_item()
+        # self.calcula_total_comissao_item()
         super(ItemVenda, self).save(*args, **kwargs)

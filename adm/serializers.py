@@ -1,3 +1,4 @@
+from .choices import FINALIZADO
 from rest_framework import serializers
 from .models import ProdutoServico, Vendedor, Cliente, Venda, ItemVenda
 from decimal import Decimal
@@ -101,20 +102,62 @@ class VendaSerializer(serializers.ModelSerializer):
     # # """ Método que atualiza venda, e seus respectivos itens.
     # #     Atualiza, quando tem o id, quando não, cria um novo item para aquela venda.
     # # """
-    # def update(self, instance, validated_data):
-    #     itens_venda = validated_data['itemvenda_set']
-    #     del validated_data['itemvenda_set']
+    def update(self, instance, validated_data):
+        # ao finalizar venda (status FINALIZADO), verificar itens se realmente estao seguindo a restrição de horario:
+        id_venda = instance.id
+        situacao_atualizada = validated_data['situacao']
 
-    #     instance = super().update(instance, validated_data)
+        intervalo_1_ativo = False
+        intervalo_1_ativo = False
 
-    #     for item in itens_venda:
-    #         item_id = item.get('id', None)
+        venda_old = Venda.objects.filter(id=id_venda).first()
+        # ao finalizar venda, verificar restriçoes de horario para dar comissão:
+        if situacao_atualizada == FINALIZADO and venda_old.situacao != situacao_atualizada:
 
-    #         if item_id:
-    #             item_obj = ItemVenda.objects.get(id=item_id, venda=instance)
-    #             item_obj.venda = item.get('venda', item_obj.venda)
-    #             item_obj.save()
-    #         else:
-    #             ItemVenda.objects.create(venda=instance, **item)
+            #pega hora atual:
+            hora_atual = datetime.today().time().replace(second=0, microsecond=0)
+            # intervalo um
+            inicio_intervalo_1 =  datetime.strptime('00:00', '%H:%M').time()
+            fim_intervalo_1 =  datetime.strptime('12:00', '%H:%M').time()
+            # intervalo dois
+            inicio_intervalo_2=  datetime.strptime('12:01', '%H:%M').time()
+            fim_intervalo_2 =  datetime.strptime('23:59', '%H:%M').time()
 
-    #     return instance
+            # Se vender entre 00:00 e 12:00 a comissão máxima é de 5% por item venda.
+            if hora_atual >= inicio_intervalo_1 and hora_atual <= fim_intervalo_1:
+                print("antes do meio-dia")
+                intervalo_1_ativo = True
+            
+            # Venda entre 12:01 e 23:59 a comissão é no mínimo 4%.
+            elif hora_atual >= inicio_intervalo_2 and hora_atual <= fim_intervalo_2:
+                print("depois do meio-dia HAHA")
+                intervalo_2_ativo = True
+
+            lista_item_venda = ItemVenda.objects.filter(venda_id=id_venda)
+
+            # itera sobre os itens venda, verificando a restrição de comissao e recalcula.
+            for item_venda in lista_item_venda:
+
+                if intervalo_1_ativo:
+                    # entre 00:00 e 12:00 a comissão máxima é de 5% por item venda.
+                    # se passar do maximo, aplicar o maximo e recalcular comissao do item
+                    if item_venda.produto_servico.comissao > Decimal(5.0):
+                        item_venda.calcula_total_comissao_item(comissao_reaplicada=Decimal(5.0))
+                    else:
+                        item_venda.calcula_total_comissao_item()
+                
+                elif intervalo_2_ativo:
+                    # entre 12:01 e 23:59 a comissão é no mínimo 4%.
+                    # se menor que 4%, aplicar o minimo e recalcular comissao do item
+                    if item_venda.produto_servico.comissao < Decimal(4.0):
+                        print("Produto nao atinge comissao minima")
+                        item_venda.calcula_total_comissao_item(comissao_reaplicada=Decimal(4.0))
+                    else:
+                        print("mais do que o minimo!!")
+                        item_venda.calcula_total_comissao_item()
+
+                item_venda.save()
+
+        instance = super().update(instance, validated_data)
+        return instance
+
