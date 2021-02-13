@@ -47,7 +47,7 @@ class Venda(models.Model):
         self.valor_comissao_total = total_comissao
 
     def save(self, *args, **kwargs):
-        super(Venda, self).save(*args, **kwargs)
+        # super(Venda, self).save(*args, **kwargs)
         self.calcula_valor_total()
         self.calcula_valor_comissao_total()
         super(Venda, self).save(*args, **kwargs)

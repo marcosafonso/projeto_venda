@@ -2,7 +2,7 @@ from django.conf.urls import include
 from django.urls import path
 from .import views
 from rest_framework import routers
-from .views import ProdutoServicoViewSet, VendedorViewSet, ClienteViewSet, VendaViewSet, \
+from .views import ProdutoServicoViewSet, VendedorViewSet, ClienteViewSet, VendaViewSet,\
     ItemVendaViewSet
 
 router = routers.DefaultRouter()
