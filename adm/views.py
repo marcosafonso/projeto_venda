@@ -2,7 +2,7 @@ from django.core.checks import messages
 from .choices import FINALIZADO
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import ClienteSerializer, ItemVendaSerializer, ProdutoServicoSerializer, VendaSerializer, VendedorSerializer
+from .serializers import ClienteSerializer, ItemVendaListSerializer, ItemVendaSerializer, ProdutoServicoSerializer, VendaListSerializer, VendaSerializer, VendedorSerializer
 from .models import Cliente, ItemVenda, ProdutoServico, Venda, Vendedor
 from django.shortcuts import render
 from rest_framework import response, viewsets
@@ -39,6 +39,16 @@ class ClienteViewSet(viewsets.ModelViewSet):
     # permission_classes = [permissions.IsAuthenticated]
 
 
+class VendaListViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Venda.objects.all().order_by('-id')
+    serializer_class = VendaListSerializer
+    http_method_names = ['get']
+    # permission_classes = [permissions.IsAuthenticated]
+
+
 class VendaViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
@@ -46,6 +56,25 @@ class VendaViewSet(viewsets.ModelViewSet):
     queryset = Venda.objects.all().order_by('-id')
     serializer_class = VendaSerializer
     # permission_classes = [permissions.IsAuthenticated]
+
+
+class ItemVendaListViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = ItemVenda.objects.all().order_by('-id')
+    serializer_class = ItemVendaListSerializer
+    http_method_names = ['get']
+
+    # def get_queryset(self):
+    #     """
+    #         override get queryset
+    #     """
+    #     queryset = ItemVenda.objects.all().order_by('-id')
+    #     venda_pk = self.request.query_params.get('venda_pk', None)
+    #     if venda_pk is not None:
+    #         queryset = queryset.filter(venda_id=venda_pk)
+    #     return queryset
 
 
 class ItemVendaViewSet(viewsets.ModelViewSet):

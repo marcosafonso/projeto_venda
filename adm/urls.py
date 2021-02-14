@@ -2,7 +2,7 @@ from django.conf.urls import include
 from django.urls import path
 from .import views
 from rest_framework import routers
-from .views import ProdutoServicoViewSet, VendedorViewSet, ClienteViewSet, VendaViewSet,\
+from .views import ItemVendaListViewSet, ProdutoServicoViewSet, VendaListViewSet, VendedorViewSet, ClienteViewSet, VendaViewSet,\
     ItemVendaViewSet, pesquisa_comissao_vendedor, pesquisa_compras_cliente, pesquisa_mais_vendidos
 
 router = routers.DefaultRouter()
@@ -10,7 +10,10 @@ router.register(r'produto_servico', ProdutoServicoViewSet)
 router.register(r'vendedor', VendedorViewSet)
 router.register(r'cliente', ClienteViewSet)
 router.register(r'venda', VendaViewSet)
+router.register(r'lista_venda', VendaListViewSet)
 router.register(r'item_venda', ItemVendaViewSet)
+router.register(r'lista_item_venda', ItemVendaListViewSet)
+
 
 urlpatterns=[
     #your paths go here

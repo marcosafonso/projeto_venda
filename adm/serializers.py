@@ -27,16 +27,24 @@ class ClienteSerializer(serializers.ModelSerializer):
         fields = ['id', 'nome', 'telefone']
 
 
-class ItemVendaSerializer(serializers.ModelSerializer):
-    """ Fundamental ter o id aqui para fazer update ao usar como nested objects (entenda formset) em
-    um cadastro Pai (nesse caso, cadastro de Produto)."""
-    id = serializers.IntegerField(required=False)
+class ItemVendaListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ItemVenda
         fields = ('id', 'produto_servico', 'venda',
                   'quantidade', 'total', 'total_comissao')
+        depth = 1
+
+class ItemVendaSerializer(serializers.ModelSerializer):
+    # """ Fundamental ter o id aqui para fazer update ao usar como nested objects (entenda formset) em
+    # um cadastro Pai (nesse caso, cadastro de Produto)."""
+    # id = serializers.IntegerField(required=False)
     
+    class Meta:
+        model = ItemVenda
+        fields = ('id', 'produto_servico', 'venda',
+                  'quantidade', 'total', 'total_comissao')
+
     # def create(self, validated_data):
     #     """ Modificar a comissão de acordo com horário de realização. Baseado na Data criação."""
     #     produto_servico = validated_data['produto_servico']
@@ -173,3 +181,12 @@ class VendaSerializer(serializers.ModelSerializer):
         instance = super().update(instance, validated_data)
         return instance
 
+
+class VendaListSerializer(serializers.ModelSerializer):
+    list_itens = ItemVendaListSerializer(source='itemvenda_set', many=True)
+    
+    class Meta:
+        model = Venda
+        fields = ['id', 'data_criacao', 'vendedor', 'cliente', 'situacao',
+                  'valor_total', 'valor_comissao_total', 'list_itens']
+        depth = 1
