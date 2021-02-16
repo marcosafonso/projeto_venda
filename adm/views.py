@@ -66,16 +66,6 @@ class ItemVendaListViewSet(viewsets.ModelViewSet):
     serializer_class = ItemVendaListSerializer
     http_method_names = ['get']
 
-    # def get_queryset(self):
-    #     """
-    #         override get queryset
-    #     """
-    #     queryset = ItemVenda.objects.all().order_by('-id')
-    #     venda_pk = self.request.query_params.get('venda_pk', None)
-    #     if venda_pk is not None:
-    #         queryset = queryset.filter(venda_id=venda_pk)
-    #     return queryset
-
 
 class ItemVendaViewSet(viewsets.ModelViewSet):
     """
@@ -192,23 +182,27 @@ def pesquisa_mais_vendidos(request, pk=None):
         data_inicio = datetime.strptime(data_inicio_str,  '%d/%m/%Y')
         data_fim = datetime.strptime(data_fim_str,  '%d/%m/%Y')
 
-
         lista_itens_vendas = ItemVenda.objects.filter(
             venda__data_criacao__date__lte=data_fim, venda__data_criacao__date__gte=data_inicio, venda__situacao=FINALIZADO)
-            # .values_list('produto_servico_id', flat=True).distinct()
+        # .values_list('produto_servico_id', flat=True).distinct()
 
-        ids_itens_vendidos = lista_itens_vendas.values_list('produto_servico_id', flat=True).distinct()
+        ids_itens_vendidos = lista_itens_vendas.values_list(
+            'produto_servico_id', flat=True).distinct()
 
         relatorio_dic = {}
         for item_vendido in ids_itens_vendidos:
-            produto_obj = ProdutoServico.objects.filter(id=item_vendido).first()
-            qtd = lista_itens_vendas.filter(produto_servico_id=item_vendido).count()
-            
-            relatorio_dic['id: '+ str(produto_obj.id) + ' - ' + produto_obj.descricao] = qtd
+            produto_obj = ProdutoServico.objects.filter(
+                id=item_vendido).first()
+            qtd = lista_itens_vendas.filter(
+                produto_servico_id=item_vendido).count()
 
-        relatorio_ordenado_d = dict( sorted(relatorio_dic.items(), key=operator.itemgetter(1), reverse=True))
+            relatorio_dic['id: ' + str(produto_obj.id) +
+                          ' - ' + produto_obj.descricao] = qtd
 
-        mensagem = {'Produtos e serviços adquiridos': relatorio_ordenado_d }
+        relatorio_ordenado_d = dict(
+            sorted(relatorio_dic.items(), key=operator.itemgetter(1), reverse=True))
+
+        mensagem = {'Produtos e serviços adquiridos': relatorio_ordenado_d}
         return Response(mensagem, status=200, content_type='application/json')
 
     except Exception as e:

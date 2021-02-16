@@ -71,7 +71,8 @@ class ItemVenda(models.Model):
         Venda, verbose_name='Venda', on_delete=models.PROTECT)
     produto_servico = models.ForeignKey(
         ProdutoServico, verbose_name='Produto/Serviço', on_delete=models.PROTECT)
-    quantidade = models.IntegerField(default=1, verbose_name='Quantidade')
+    quantidade = models.IntegerField(default=1, verbose_name='Quantidade',
+                                     validators=[MinValueValidator(1)])
     total = models.DecimalField(
         max_digits=10, decimal_places=2, default=0, verbose_name='Total')
     total_comissao = models.DecimalField(
