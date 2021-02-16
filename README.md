@@ -31,7 +31,8 @@
   - Acesse as urls da api por 127.0.0.1:8000/adm/
 
 
-  - Com esse projeto em modo runserver, acesse o projeto angular caixa_livre e deixe rodando com ng_serve, acessando localhost:4200/venda para usar o front.
+  - Com esse projeto em modo runserver, agora deve-se instalar o projeto frontend angular no repositório: https://github.com/marcosafonso/caixa_livre ;
+  Após configurar o projeto angular caixa_livre, deixe rodando com ng_serve, acessando localhost:4200/venda para usar o front.
   
 
 
