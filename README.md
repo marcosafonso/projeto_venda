@@ -31,5 +31,7 @@
   - Acesse as urls da api por 127.0.0.1:8000/adm/
   - Para preencher dados de test, Abra o arquivo Dados_api.txt que está na raíz desse projeto, onde você terá dados para cadastrar Vendedor, Cliente e ProdutoServico para preencher o banco e ter dados básicos para realizar vendas. Exemplo: Pegue o json de cadastro de produtos em dados_api.txt, acesse http://127.0.0.1:8000/adm/produto_servico/ e entre na opçao "Raw Data", cole esse json e aperte o botão Post para cadastrar os dados.
   
+  - Com esse projeto em modo runserver, acesse o projeto angular caixa_livre e deixe rodando com ng_serve, acessando localhost:4200/venda para usar o front.
+  
 
 
