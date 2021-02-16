@@ -28,8 +28,27 @@
   }
   - E então, crie um novo Database vazio no Postgre Admin, com o nome vendasdb.
   - Volte ao terminal/cmd, e rode o comando " python manage.py migrate" para criar as tabelas do banco.
-  - Acesse as urls da api por 127.0.0.1:8000/adm/
-
+  - Acesse as urls da api por 127.0.0.1:8000/adm/. 
+   Será necessário criar ao menos 1 cliente, 1 vendedor e 1 produto_servico, para posteriormente usar o front de realizar venda.
+ 
+  Exemplos de json para usar no modo Post :
+      # Produto (http://localhost:8000/adm/produto_servico/)
+      {
+        "descricao": "Tênis Adidas",
+        "codigo_barras": 221,
+        "preco_unitario": "200.00",
+        "comissao": "4.00"
+      }
+     # Vendedor (http://localhost:8000/adm/vendedor/)
+     {
+      "nome": "Luciano Kane",
+      "telefone": "2798635680"
+     }
+     # Cliente (http://localhost:8000/adm/cliente/)
+     {
+       "nome": "Philipe Lahn",
+       "telefone": "2798638970"
+     }
 
   - Com esse projeto em modo runserver, agora deve-se instalar o projeto frontend angular no repositório: https://github.com/marcosafonso/caixa_livre ;
   Após configurar o projeto angular caixa_livre, deixe rodando com ng_serve, acessando localhost:4200/venda para usar o front.
