@@ -73,7 +73,7 @@
             "vendedor": "2798635640" # pesquisado pelo telefone vendedor.
         }
 
-2. Quais produtos e serviços um determinado cliente comprou num intervalo de tempo?
+# 2 - Quais produtos e serviços um determinado cliente comprou num intervalo de tempo?
         Ir na Url: 127.0.0.1:8000/adm/pesquisa_compras_cliente
         {
             "data_inicio": "10/02/2021",
