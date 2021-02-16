@@ -17,8 +17,10 @@ class RealizarVendaTestCase(TestCase):
                                       preco_unitario=2.00, comissao=4.00)
                                       
         venda = Venda.objects.create(vendedor=vendedor, cliente=cliente, situacao=1)
-        ItemVenda.objects.create(venda=venda, produto_servico=produto,
+        item = ItemVenda.objects.create(venda=venda, produto_servico=produto,
                                  quantidade=2)
+        item.calcula_total_comissao_item()
+        item.save()
         venda.save()
 
     def test_realiza_venda(self):
