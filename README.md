@@ -64,7 +64,7 @@
     "lista_item_venda": "http://localhost:8000/adm/lista_item_venda/"
 
 # Urls de consultas solicitadas:
-1 - Dado um intervalo de tempo, quanto de comissão um vendedor tem direito?
+# 1 - Dado um intervalo de tempo, quanto de comissão um vendedor tem direito?
         Ir na Url: 127.0.0.1:8000/adm/pesquisa_comissao_vendedor
         Exemplo de json de requisicao: 
         {
