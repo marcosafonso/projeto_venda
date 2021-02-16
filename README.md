@@ -31,7 +31,7 @@
   - Acesse as urls da api por 127.0.0.1:8000/adm/. 
    Será necessário criar ao menos 1 cliente, 1 vendedor e 1 produto_servico, para posteriormente usar o front de realizar venda.
  
-  Exemplos de json para usar no modo Post :
+  ## Exemplos de json para usar no modo Post :
       # Produto (http://localhost:8000/adm/produto_servico/)
       {
         "descricao": "Tênis Adidas",
