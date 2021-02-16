@@ -7,9 +7,9 @@
 * Pip
 * Desejável usar virtualenv
 
-***Instruções de instalaçao e execução:
+## Instruções de instalaçao e execução:
 
-## Clonar este repositório com git clone <urldorepositorio>.
+# Clonar este repositório com git clone <urldorepositorio>.
   
 ## Baixar dependências:
   - Preferencialmente, Crie uma virtualenv para instalar os requisitos desse projeto:
