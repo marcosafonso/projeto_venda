@@ -1,0 +1,37 @@
+# Projeto Venda - Projeto de Backend com PostGres e Django Rest;
+
+
+***Pré-requisitos
+* Django 2 ou superior.
+* Postgres ou semelhante SGBD.
+* Pip
+* Desejável usar virtualenv
+
+## Instruções de instalaçao e execução:
+
+# Clonar este repositório com git clone <urldorepositorio>.
+  
+## Baixar dependências:
+  - Preferencialmente, Crie uma virtualenv para instalar os requisitos desse projeto:
+  - Abra um terminal/cmd e ative sua virtualenv.
+  - Na pasta raiz do projeto, rode o comando " pip install -r requirements.txt ".
+  - Altere nos settings.py os dados de Database para usar suas credenciais de acesso ao banco ( aqui foi usado Postgres).
+    DATABASES = {
+      'default': {
+          'ENGINE': 'django.db.backends.postgresql_psycopg2',
+          'NAME': 'vendasdb',
+          'USER': 'SEU_USER',
+          'PASSWORD': 'SEU_PASSWORD',
+          'HOST': 'localhost',
+          'PORT': '5432',
+      }
+  }
+  - E então, crie um novo Database vazio no Postgre Admin, com o nome vendasdb.
+  - Volte ao terminal/cmd, e rode o comando " python manage.py migrate" para criar as tabelas do banco.
+  - Acesse as urls da api por 127.0.0.1:8000/adm/
+
+
+  - Com esse projeto em modo runserver, acesse o projeto angular caixa_livre e deixe rodando com ng_serve, acessando localhost:4200/venda para usar o front.
+  
+
+
